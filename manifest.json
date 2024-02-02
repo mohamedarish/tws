@@ -22,10 +22,6 @@
 	"permissions": [
 		"menus",
 		"activeTab",
-		"devtools",
-		"notifications",
-
-		"find",
 		"scripting"
 	]
 }
