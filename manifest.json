@@ -22,12 +22,10 @@
 	"permissions": [
 		"menus",
 		"activeTab",
-		"background",
-		"contentSettings",
 		"devtools",
+		"notifications",
 
 		"find",
-		"pageCapture",
 		"scripting"
 	]
 }
