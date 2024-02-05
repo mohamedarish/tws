@@ -1,16 +1,16 @@
-let current_content = "";
+let current_content = '"datetimee", "usertag", "username", "content"\n';
 
 document.addEventListener("DOMContentLoaded", async () => {
 	const tweets = await browser.storage.local.get("tweets");
 
 	if (tweets.tweets && tweets.tweets.length > 0) {
-		document.getElementById("nums").innerText = tweets.tweets.length;
-
 		tweets.tweets.forEach((tweet) => {
 			const tableRow = document.createElement("tr");
-			current_content += String.raw`"${tweet.time}", "${tweet.tag}", "${
-				tweet.name
-			}", "${tweet.content.replace(",", ";")}", `;
+			current_content += `${JSON.stringify(tweet.time)}, ${JSON.stringify(
+				tweet.tag
+			)}, ${JSON.stringify(tweet.name)}, ${JSON.stringify(
+				tweet.content.replaceAll(",", ";")
+			)}\n`;
 
 			const time = document.createElement("td");
 			time.innerText += String.raw`${tweet.time}`;

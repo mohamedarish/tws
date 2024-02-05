@@ -13,6 +13,10 @@ window.addEventListener("click", () => {
 		let nameContainer = container.children[0];
 		let contentContainer = container.children[1];
 
+		if (contentContainer.innerText.startsWith("Replying to")) {
+			contentContainer = container.children[2];
+		}
+
 		let names = nameContainer.innerText.split("\n");
 
 		let username = names[0];
