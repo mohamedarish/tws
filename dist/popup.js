@@ -3,7 +3,7 @@ let current_content = "";
 document.addEventListener("DOMContentLoaded", async () => {
 	const tweets = await browser.storage.local.get("tweets");
 
-	if (tweets.tweets.length > 0) {
+	if (tweets.tweets && tweets.tweets.length > 0) {
 		document.getElementById("nums").innerText = tweets.tweets.length;
 
 		tweets.tweets.forEach((tweet) => {

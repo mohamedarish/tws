@@ -21,6 +21,13 @@ window.addEventListener("click", () => {
 
 		let time = timeElement.getAttribute("datetime");
 
+		// console.table({
+		// 	name: username,
+		// 	tag,
+		// 	time,
+		// 	content: contentContainer.innerText,
+		// });
+
 		es.push({
 			name: username,
 			tag,

@@ -11,8 +11,10 @@ const objectIsInArray = (object, array) => {
 browser.runtime.onMessage.addListener(async (req, sender) => {
 	let content = await browser.storage.local.get("tweets");
 
-	if (!content.tweets.length) {
-		content.tweets = req.es;
+	if (!content.tweets || content.tweets.length < 1) {
+		content = {
+			tweets: req.es,
+		};
 	} else {
 		req.es.forEach((e) => {
 			if (
