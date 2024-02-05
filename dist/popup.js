@@ -65,3 +65,51 @@ document.getElementById("download-button").addEventListener("click", () => {
 
 	URL.revokeObjectURL(blobUrl);
 });
+
+document.getElementById("pause-play").addEventListener("click", async () => {
+	const pause = await browser.storage.local.get("pause");
+
+	if (!pause || !pause.pause) {
+		document.getElementById("pause-play").innerText = "▶️ Start";
+		browser.browserAction.setBadgeBackgroundColor({
+			color: "rgba(0, 0, 0, 0)",
+		});
+
+		browser.browserAction.setBadgeText({
+			text: "🛑",
+		});
+	} else {
+		document.getElementById("pause-play").innerText = "⏸️ Stop";
+		browser.browserAction.setBadgeBackgroundColor({
+			color: "gray",
+		});
+
+		browser.browserAction.setBadgeText({
+			text: "0",
+		});
+	}
+	browser.storage.local.set({ pause: pause.pause ? !pause.pause : true });
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+	const pause = await browser.storage.local.get("pause");
+
+	if (pause && pause.pause) {
+		document.getElementById("pause-play").innerText = "▶️ Start";
+		browser.browserAction.setBadgeBackgroundColor({
+			color: "rgba(0, 0, 0, 0)",
+		});
+
+		browser.browserAction.setBadgeText({
+			text: "🛑",
+		});
+	} else {
+		browser.browserAction.setBadgeBackgroundColor({
+			color: "gray",
+		});
+
+		browser.browserAction.setBadgeText({
+			text: "0",
+		});
+	}
+});

@@ -1,4 +1,10 @@
-window.addEventListener("click", () => {
+window.addEventListener("click", async () => {
+	const pause = await browser.storage.local.get("pause");
+
+	if (pause && pause.pause) {
+		return;
+	}
+
 	const elements = document.querySelectorAll(
 		'[data-testid="cellInnerDiv"] article'
 	);
@@ -42,5 +48,5 @@ window.addEventListener("click", () => {
 
 	browser.runtime.sendMessage({
 		es,
-	})
-})
+	});
+});
