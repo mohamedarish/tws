@@ -78,7 +78,7 @@ document.getElementById("pause-play").addEventListener("click", async () => {
 	const pause = await browser.storage.local.get("pause");
 	const tweets = await browser.storage.local.get("tweets");
 
-	if (!pause || !pause.pause) {
+	if (!pause.pause) {
 		document.getElementById("pause-play").innerText = "▶️ Start";
 		document
 			.getElementById("pause-play")
@@ -99,7 +99,7 @@ document.getElementById("pause-play").addEventListener("click", async () => {
 
 		browser.browserAction.setBadgeBackgroundColor({
 			color:
-				!tweets || tweets.tweets.length < 1
+				!tweets.tweets || tweets.tweets.length < 1
 					? "grey"
 					: tweets.tweets.length < 300
 					? "green"
@@ -111,7 +111,7 @@ document.getElementById("pause-play").addEventListener("click", async () => {
 		});
 
 		browser.browserAction.setBadgeText({
-			text: tweets ? JSON.stringify(tweets.tweets.length) : "0",
+			text: tweets.tweets ? JSON.stringify(tweets.tweets.length) : "0",
 		});
 	}
 	browser.storage.local.set({ pause: pause.pause ? !pause.pause : true });
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	const pause = await browser.storage.local.get("pause");
 	const tweets = await browser.storage.local.get("tweets");
 
-	if (pause && pause.pause) {
+	if (pause.pause) {
 		document.getElementById("pause-play").innerText = "▶️ Start";
 		document
 			.getElementById("pause-play")
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	} else {
 		browser.browserAction.setBadgeBackgroundColor({
 			color:
-				!tweets || tweets.tweets.length < 1
+				!tweets.tweets || tweets.tweets.length < 1
 					? "grey"
 					: tweets.tweets.length < 300
 					? "green"
@@ -149,7 +149,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 		});
 
 		browser.browserAction.setBadgeText({
-			text: tweets ? JSON.stringify(tweets.tweets.length) : "0",
+			text: tweets.tweets ? JSON.stringify(tweets.tweets.length) : "0",
 		});
+	}
+
+	const searchKey = await browser.storage.local.get("searchKey");
+
+	if (searchKey.searchKey) {
+		document
+			.getElementById("filename")
+			.setAttribute("value", searchKey.searchKey);
+	}
+});
+
+document.getElementById("filename").addEventListener("keyup", (event) => {
+	if (event.key === "Enter") {
+		event.preventDefault();
+		document.getElementById("download-button").dispatchEvent(
+			new MouseEvent("click", {
+				bubbles: true,
+				cancelable: true,
+				view: window,
+			})
+		);
 	}
 });

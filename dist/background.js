@@ -55,5 +55,8 @@ browser.runtime.onMessage.addListener(async (req, sender) => {
 		text: JSON.stringify(content.tweets.length),
 	});
 
-	browser.storage.local.set({ tweets: content.tweets });
+	browser.storage.local.set({
+		tweets: content.tweets,
+		searchKey: req.searchKey,
+	});
 });

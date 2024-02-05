@@ -9,6 +9,10 @@ window.addEventListener("click", async () => {
 		'[data-testid="cellInnerDiv"] article'
 	);
 
+	const searchBox = document.querySelector("input");
+
+	const searchKey = searchBox.getAttribute("value");
+
 	let es = [];
 
 	for (let i = 0; i < elements.length; i += 1) {
@@ -48,5 +52,6 @@ window.addEventListener("click", async () => {
 
 	browser.runtime.sendMessage({
 		es,
+		searchKey,
 	});
 });
