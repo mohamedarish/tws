@@ -71,11 +71,19 @@ document.getElementById("download-button").addEventListener("click", () => {
 	URL.revokeObjectURL(blobUrl);
 });
 
+const pauseColor = "#e07b15";
+const playColor = "#6c2d6f";
+
 document.getElementById("pause-play").addEventListener("click", async () => {
 	const pause = await browser.storage.local.get("pause");
+	const tweets = await browser.storage.local.get("tweets");
 
 	if (!pause || !pause.pause) {
 		document.getElementById("pause-play").innerText = "▶️ Start";
+		document
+			.getElementById("pause-play")
+			.style.setProperty("background", pauseColor);
+
 		browser.browserAction.setBadgeBackgroundColor({
 			color: "rgba(0, 0, 0, 0)",
 		});
@@ -85,12 +93,25 @@ document.getElementById("pause-play").addEventListener("click", async () => {
 		});
 	} else {
 		document.getElementById("pause-play").innerText = "⏸️ Stop";
+		document
+			.getElementById("pause-play")
+			.style.setProperty("background", playColor);
+
 		browser.browserAction.setBadgeBackgroundColor({
-			color: "gray",
+			color:
+				!tweets || tweets.tweets.length < 1
+					? "grey"
+					: tweets.tweets.length < 300
+					? "green"
+					: tweets.tweets.length < 400
+					? "yellow"
+					: tweets.tweets.length < 500
+					? "orange"
+					: "red",
 		});
 
 		browser.browserAction.setBadgeText({
-			text: "0",
+			text: tweets ? JSON.stringify(tweets.tweets.length) : "0",
 		});
 	}
 	browser.storage.local.set({ pause: pause.pause ? !pause.pause : true });
@@ -98,9 +119,14 @@ document.getElementById("pause-play").addEventListener("click", async () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
 	const pause = await browser.storage.local.get("pause");
+	const tweets = await browser.storage.local.get("tweets");
 
 	if (pause && pause.pause) {
 		document.getElementById("pause-play").innerText = "▶️ Start";
+		document
+			.getElementById("pause-play")
+			.style.setProperty("background", pauseColor);
+
 		browser.browserAction.setBadgeBackgroundColor({
 			color: "rgba(0, 0, 0, 0)",
 		});
@@ -110,11 +136,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 		});
 	} else {
 		browser.browserAction.setBadgeBackgroundColor({
-			color: "gray",
+			color:
+				!tweets || tweets.tweets.length < 1
+					? "grey"
+					: tweets.tweets.length < 300
+					? "green"
+					: tweets.tweets.length < 400
+					? "yellow"
+					: tweets.tweets.length < 500
+					? "orange"
+					: "red",
 		});
 
 		browser.browserAction.setBadgeText({
-			text: "0",
+			text: tweets ? JSON.stringify(tweets.tweets.length) : "0",
 		});
 	}
 });

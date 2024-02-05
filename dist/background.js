@@ -42,7 +42,7 @@ browser.runtime.onMessage.addListener(async (req, sender) => {
 		browser.browserAction.setBadgeBackgroundColor({
 			color: "yellow",
 		});
-	} else if (content.tweets.length < 300) {
+	} else if (content.tweets.length < 500) {
 		browser.browserAction.setBadgeBackgroundColor({
 			color: "orange",
 		});
