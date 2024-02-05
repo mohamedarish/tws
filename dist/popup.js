@@ -45,12 +45,17 @@ document.getElementById("clear-button").addEventListener("click", () => {
 document.getElementById("download-button").addEventListener("click", () => {
 	const blob = new Blob([current_content], { type: "text/html" });
 
+	const filename = document.getElementById("filename").value;
+
 	const blobUrl = URL.createObjectURL(blob);
 
 	const link = document.createElement("a");
 
 	link.setAttribute("href", blobUrl);
-	link.setAttribute("download", "some_data.csv");
+	link.setAttribute(
+		"download",
+		filename ? `${filename}.csv` : "some_data.csv"
+	);
 	document.body.appendChild(link);
 
 	link.dispatchEvent(
