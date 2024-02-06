@@ -27,7 +27,7 @@ browser.runtime.onMessage.addListener(async (req, sender) => {
 		req.es.forEach((e) => {
 			if (
 				!objectIsInArray(e, content.tweets) &&
-				content.tweets.length <= 100
+				content.tweets.length <= 500
 			) {
 				content.tweets.push(e);
 			}
