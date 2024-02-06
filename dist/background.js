@@ -1,8 +1,8 @@
-browser.browserAction.setBadgeBackgroundColor({
-	color: "gray",
+chrome.action.setBadgeBackgroundColor({
+	color: "#808080",
 });
 
-browser.browserAction.setBadgeText({
+chrome.action.setBadgeText({
 	text: "0",
 });
 
@@ -16,8 +16,8 @@ const objectIsInArray = (object, array) => {
 	return false;
 };
 
-browser.runtime.onMessage.addListener(async (req, sender) => {
-	let content = await browser.storage.local.get("tweets");
+chrome.runtime.onMessage.addListener(async (req, sender) => {
+	let content = await chrome.storage.local.get("tweets");
 
 	if (!content.tweets || content.tweets.length < 1) {
 		content = {
@@ -35,27 +35,27 @@ browser.runtime.onMessage.addListener(async (req, sender) => {
 	}
 
 	if (content.tweets.length < 300) {
-		browser.browserAction.setBadgeBackgroundColor({
-			color: "green",
+		chrome.action.setBadgeBackgroundColor({
+			color: "#00ff00",
 		});
 	} else if (content.tweets.length < 400) {
-		browser.browserAction.setBadgeBackgroundColor({
-			color: "yellow",
+		chrome.action.setBadgeBackgroundColor({
+			color: "#ffff00",
 		});
 	} else if (content.tweets.length < 500) {
-		browser.browserAction.setBadgeBackgroundColor({
-			color: "orange",
+		chrome.action.setBadgeBackgroundColor({
+			color: "#ff7700",
 		});
 	} else {
-		browser.browserAction.setBadgeBackgroundColor({
-			color: "red",
+		chrome.action.setBadgeBackgroundColor({
+			color: "#ff0000",
 		});
 	}
-	browser.browserAction.setBadgeText({
+	chrome.action.setBadgeText({
 		text: JSON.stringify(content.tweets.length),
 	});
 
-	browser.storage.local.set({
+	chrome.storage.local.set({
 		tweets: content.tweets,
 		searchKey: req.searchKey,
 	});

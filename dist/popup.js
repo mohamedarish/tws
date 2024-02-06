@@ -1,7 +1,7 @@
 let current_content = '"datetimee", "usertag", "username", "content"\n';
 
 document.addEventListener("DOMContentLoaded", async () => {
-	const tweets = await browser.storage.local.get("tweets");
+	const tweets = await chrome.storage.local.get("tweets");
 
 	if (tweets.tweets && tweets.tweets.length > 0) {
 		tweets.tweets.forEach((tweet) => {
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 document.getElementById("clear-button").addEventListener("click", () => {
-	browser.storage.local.set({ tweets: [] });
+	chrome.storage.local.set({ tweets: [] });
 	const tweetDiv = document.getElementById("tweetStore");
 
 	while (tweetDiv.firstChild) {
@@ -75,8 +75,8 @@ const pauseColor = "#e07b15";
 const playColor = "#6c2d6f";
 
 document.getElementById("pause-play").addEventListener("click", async () => {
-	const pause = await browser.storage.local.get("pause");
-	const tweets = await browser.storage.local.get("tweets");
+	const pause = await chrome.storage.local.get("pause");
+	const tweets = await chrome.storage.local.get("tweets");
 
 	if (!pause.pause) {
 		document.getElementById("pause-play").innerText = "▶️ Start";
@@ -84,11 +84,11 @@ document.getElementById("pause-play").addEventListener("click", async () => {
 			.getElementById("pause-play")
 			.style.setProperty("background", pauseColor);
 
-		browser.browserAction.setBadgeBackgroundColor({
+		chrome.action.setBadgeBackgroundColor({
 			color: "rgba(0, 0, 0, 0)",
 		});
 
-		browser.browserAction.setBadgeText({
+		chrome.action.setBadgeText({
 			text: "🛑",
 		});
 	} else {
@@ -97,29 +97,29 @@ document.getElementById("pause-play").addEventListener("click", async () => {
 			.getElementById("pause-play")
 			.style.setProperty("background", playColor);
 
-		browser.browserAction.setBadgeBackgroundColor({
+		chrome.action.setBadgeBackgroundColor({
 			color:
 				!tweets.tweets || tweets.tweets.length < 1
-					? "grey"
+					? "#808080"
 					: tweets.tweets.length < 300
-					? "green"
+					? "#00ff00"
 					: tweets.tweets.length < 400
-					? "yellow"
+					? "#ffff00"
 					: tweets.tweets.length < 500
-					? "orange"
-					: "red",
+					? "#ff7700"
+					: "#ff0000",
 		});
 
-		browser.browserAction.setBadgeText({
+		chrome.action.setBadgeText({
 			text: tweets.tweets ? JSON.stringify(tweets.tweets.length) : "0",
 		});
 	}
-	browser.storage.local.set({ pause: pause.pause ? !pause.pause : true });
+	chrome.storage.local.set({ pause: pause.pause ? !pause.pause : true });
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-	const pause = await browser.storage.local.get("pause");
-	const tweets = await browser.storage.local.get("tweets");
+	const pause = await chrome.storage.local.get("pause");
+	const tweets = await chrome.storage.local.get("tweets");
 
 	if (pause.pause) {
 		document.getElementById("pause-play").innerText = "▶️ Start";
@@ -127,33 +127,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 			.getElementById("pause-play")
 			.style.setProperty("background", pauseColor);
 
-		browser.browserAction.setBadgeBackgroundColor({
+		chrome.action.setBadgeBackgroundColor({
 			color: "rgba(0, 0, 0, 0)",
 		});
 
-		browser.browserAction.setBadgeText({
+		chrome.action.setBadgeText({
 			text: "🛑",
 		});
 	} else {
-		browser.browserAction.setBadgeBackgroundColor({
+		chrome.action.setBadgeBackgroundColor({
 			color:
 				!tweets.tweets || tweets.tweets.length < 1
-					? "grey"
+					? "#808080"
 					: tweets.tweets.length < 300
-					? "green"
+					? "#00ff00"
 					: tweets.tweets.length < 400
-					? "yellow"
+					? "#ffff00"
 					: tweets.tweets.length < 500
-					? "orange"
-					: "red",
+					? "#ff7700"
+					: "#ff0000",
 		});
 
-		browser.browserAction.setBadgeText({
+		chrome.action.setBadgeText({
 			text: tweets.tweets ? JSON.stringify(tweets.tweets.length) : "0",
 		});
 	}
 
-	const searchKey = await browser.storage.local.get("searchKey");
+	const searchKey = await chrome.storage.local.get("searchKey");
 
 	if (searchKey.searchKey) {
 		document

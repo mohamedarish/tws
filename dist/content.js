@@ -1,5 +1,5 @@
-window.addEventListener("click", async () => {
-	const pause = await browser.storage.local.get("pause");
+document.addEventListener("click", async () => {
+	const pause = await chrome.storage.local.get("pause");
 
 	if (pause && pause.pause) {
 		return;
@@ -36,6 +36,7 @@ window.addEventListener("click", async () => {
 		let time = timeElement.getAttribute("datetime");
 
 		// console.table({
+		// 	query: searchKey,
 		// 	name: username,
 		// 	tag,
 		// 	time,
@@ -50,7 +51,7 @@ window.addEventListener("click", async () => {
 		});
 	}
 
-	browser.runtime.sendMessage({
+	chrome.runtime.sendMessage({
 		es,
 		searchKey,
 	});
