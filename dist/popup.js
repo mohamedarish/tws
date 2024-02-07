@@ -40,6 +40,14 @@ document.getElementById("clear-button").addEventListener("click", () => {
 	while (tweetDiv.firstChild) {
 		tweetDiv.removeChild(tweetDiv.firstChild);
 	}
+
+	chrome.action.setBadgeBackgroundColor({
+		color: "#808080",
+	});
+
+	chrome.action.setBadgeText({
+		text: "0",
+	});
 });
 
 document.getElementById("download-button").addEventListener("click", () => {
