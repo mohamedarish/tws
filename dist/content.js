@@ -1,5 +1,5 @@
 document.addEventListener("click", async () => {
-	const pause = await chrome.storage.local.get("pause");
+	const pause = await chrome.storage.local.get(["pause"]);
 
 	if (pause && pause.pause) {
 		return;

@@ -1,7 +1,7 @@
 let current_content = '"datetimee", "usertag", "username", "content"\n';
 
 document.addEventListener("DOMContentLoaded", async () => {
-	const tweets = await chrome.storage.local.get("tweets");
+	const tweets = await chrome.storage.local.get(["tweets"]);
 
 	if (tweets.tweets && tweets.tweets.length > 0) {
 		tweets.tweets.forEach((tweet) => {
@@ -75,8 +75,8 @@ const pauseColor = "#e07b15";
 const playColor = "#6c2d6f";
 
 document.getElementById("pause-play").addEventListener("click", async () => {
-	const pause = await chrome.storage.local.get("pause");
-	const tweets = await chrome.storage.local.get("tweets");
+	const pause = await chrome.storage.local.get(["pause"]);
+	const tweets = await chrome.storage.local.get(["tweets"]);
 
 	if (!pause.pause) {
 		document.getElementById("pause-play").innerText = "▶️ Start";
@@ -118,8 +118,8 @@ document.getElementById("pause-play").addEventListener("click", async () => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-	const pause = await chrome.storage.local.get("pause");
-	const tweets = await chrome.storage.local.get("tweets");
+	const pause = await chrome.storage.local.get(["pause"]);
+	const tweets = await chrome.storage.local.get(["tweets"]);
 
 	if (pause.pause) {
 		document.getElementById("pause-play").innerText = "▶️ Start";
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		});
 	}
 
-	const searchKey = await chrome.storage.local.get("searchKey");
+	const searchKey = await chrome.storage.local.get(["searchKey"]);
 
 	if (searchKey.searchKey) {
 		document

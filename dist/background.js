@@ -6,9 +6,17 @@ chrome.action.setBadgeText({
 	text: "0",
 });
 
-const objectIsInArray = (object, array) => {
+const objectIsInArray = (obj, array) => {
 	for (let i = 0; i < array.length; i += 1) {
-		if (JSON.stringify(array[i]) === JSON.stringify(object)) {
+		let same = true;
+
+		for (let key in obj) {
+			if (obj[key] != array[i][key]) {
+				same = false;
+			}
+		}
+
+		if (same) {
 			return true;
 		}
 	}
@@ -17,7 +25,7 @@ const objectIsInArray = (object, array) => {
 };
 
 chrome.runtime.onMessage.addListener(async (req, sender) => {
-	let content = await chrome.storage.local.get("tweets");
+	let content = await chrome.storage.local.get(["tweets"]);
 
 	if (!content.tweets || content.tweets.length < 1) {
 		content = {
