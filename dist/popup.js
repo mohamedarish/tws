@@ -1,4 +1,4 @@
-let current_content = '"datetimee", "usertag", "username", "content"\n';
+let current_content = "datetimee,usertag,username,content\n";
 
 document.addEventListener("DOMContentLoaded", async () => {
 	const tweets = await browser.storage.local.get("tweets");
