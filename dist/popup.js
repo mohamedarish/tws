@@ -1,4 +1,4 @@
-let current_content = '"datetimee", "usertag", "username", "content"\n';
+let current_content = "datetime,usertag,username,content\n";
 
 document.addEventListener("DOMContentLoaded", async () => {
 	const tweets = await chrome.storage.local.get(["tweets"]);
@@ -6,11 +6,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 	if (tweets.tweets && tweets.tweets.length > 0) {
 		tweets.tweets.forEach((tweet) => {
 			const tableRow = document.createElement("tr");
-			current_content += `${JSON.stringify(tweet.time)}, ${JSON.stringify(
-				tweet.tag
-			)}, ${JSON.stringify(tweet.name)}, ${JSON.stringify(
-				tweet.content.replaceAll(",", ";")
-			)}\n`;
+			current_content += `${tweet.time},${tweet.tag},${
+				tweet.name.includes(",")
+					? String.raw`"${tweet.name}"`
+					: tweet.name
+			},${
+				tweet.content.includes(",")
+					? String.raw`"${tweet.content.replace(/\n/g, "\\n")}"`
+					: tweet.content.replace("\n", "\\n")
+			}\n`;
 
 			const time = document.createElement("td");
 			time.innerText += String.raw`${tweet.time}`;
@@ -22,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 			name.innerText += String.raw`${tweet.name}`;
 
 			const content = document.createElement("td");
-			content.innerText += String.raw`${tweet.content.replace(",", ";")}`;
+			content.innerText += String.raw`${tweet.content}`;
 
 			tableRow.appendChild(time);
 			tableRow.appendChild(tag);
@@ -51,7 +55,9 @@ document.getElementById("clear-button").addEventListener("click", () => {
 });
 
 document.getElementById("download-button").addEventListener("click", () => {
-	const blob = new Blob([current_content], { type: "text/html" });
+	const blob = new Blob([String.raw`${current_content}`], {
+		type: "text/html",
+	});
 
 	const filename = document.getElementById("filename").value;
 
