@@ -3,7 +3,7 @@
 	"name": "tws",
 	"description": "Scrape data from twitter search manually",
 	"homepage_url": "https://github.com/mohamedarish/tws",
-	"version": "0.1",
+	"version": "1.0",
 	"action": {
 		"default_icon": {
 			"32": "assets/42.png"

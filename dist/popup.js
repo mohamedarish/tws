@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 			},${
 				tweet.content.includes(",")
 					? String.raw`"${tweet.content.replace(/\n/g, "\\n")}"`
-					: tweet.content.replace("\n", "\\n")
+					: tweet.content.replace(/\n/g, "\\n")
 			}\n`;
 
 			const time = document.createElement("td");
