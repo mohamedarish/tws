@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 					: tweet.name
 			},${
 				tweet.content.includes(",")
-					? String.raw`"${tweet.content.replace(/\n/g, "\\n")}"`
+					? String.raw`"${tweet.content
+							.replace(/\n/g, "\\n")
+							.replace(/\"/, '""')}"`
 					: tweet.content.replace(/\n/g, "\\n")
 			}\n`;
 
